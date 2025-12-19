@@ -6,14 +6,17 @@ import numpy as np
 app = Flask(__name__)
 CORS(app)
 
-
 # Load model artifacts
 with open("../models/user_item_matrix.pkl", "rb") as f:
     user_item_matrix = pickle.load(f)
 
 with open("../models/item_similarity.pkl", "rb") as f:
     item_similarity_df = pickle.load(f)
-    
+
+with open("../models/user_id_map.pkl", "rb") as f:
+    user_id_map = pickle.load(f)
+
+
 def predict_rating(user_id, book_id, k=10):
     if user_id not in user_item_matrix.index or book_id not in user_item_matrix.columns:
         return None
@@ -37,11 +40,18 @@ def predict_rating(user_id, book_id, k=10):
 
     return float(numerator / denominator)
 
-@app.route("/recommend/<user_id>")
-def recommend(user_id):
-    if user_id not in user_item_matrix.index:
-        return jsonify({"error": "User not found in model"}), 404
 
+@app.route("/users")
+def get_users():
+    return jsonify(sorted(user_id_map.keys()))
+
+
+@app.route("/recommend/<int:ui_user_id>")
+def recommend(ui_user_id):
+    if ui_user_id not in user_id_map:
+        return jsonify({"error": "User not found"}), 404
+
+    user_id = user_id_map[ui_user_id]
     user_ratings = user_item_matrix.loc[user_id]
     unrated_books = user_ratings[user_ratings == 0].index
 
@@ -62,10 +72,14 @@ def recommend(user_id):
     )[:10]
 
     return jsonify({
-        "user_id": user_id,
+        "user": ui_user_id,
         "recommendations": predictions
     })
 
+@app.route("/users/count")
+def user_count():
+    return jsonify({"count": len(user_id_map)})
+
+
 if __name__ == "__main__":
     app.run(debug=True)
-
