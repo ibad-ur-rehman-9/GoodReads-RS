@@ -1,33 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Book Recommender</title>
+    <meta charset="UTF-8">
+    <title>Goodreads Recommender</title>
     <style>
         body {
-            font-family: Arial;
-            max-width: 600px;
-            margin: auto;
-            padding-top: 40px;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd, #fff3e0);
+            margin: 0;
+            padding: 0;
         }
-        input, button {
-            padding: 10px;
+
+        .container {
+            max-width: 650px;
+            margin: 70px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 14px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+
+        h2 {
+            text-align: center;
+            color: #0d47a1;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #555;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+
+        input {
             width: 100%;
+            padding: 14px;
             margin-top: 10px;
+            border-radius: 8px;
+            border: 1px solid #bbb;
+            font-size: 16px;
         }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px;
+            border-radius: 8px;
+            border: none;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #fb8c00;
+        }
+
+        .btn-secondary {
+            background-color: #1976d2;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #1565c0;
+        }
+
         .book {
-            border-bottom: 1px solid #ccc;
-            padding: 8px 0;
+            margin-top: 15px;
+            padding: 12px;
+            background: #f7f9fc;
+            border-left: 5px solid #1976d2;
+            border-radius: 6px;
+        }
+
+        .rating {
+            color: #ff9800;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 13px;
+            color: #777;
         }
     </style>
 </head>
 <body>
 
-<h2>Goodreads Book Recommender</h2>
+<div class="container">
+    <h2>Goodreads Book Recommender</h2>
+    <div class="subtitle">
+        Personalized recommendations using Collaborative Filtering
+    </div>
 
-<input type="text" id="userId" placeholder="Enter user ID">
-<button onclick="getRecommendations()">Recommend Books</button>
+    <input
+        type="number"
+        id="userId"
+        placeholder="Loading user range..."
+        min="1"
+    />
 
-<div id="results"></div>
+    <div class="buttons">
+        <button class="btn-primary" onclick="getRecommendations()">
+            Recommend Books
+        </button>
+        <button class="btn-secondary" onclick="randomUser()">
+            Random User
+        </button>
+    </div>
+
+    <div id="results"></div>
+
+    <div class="footer-note">
+        Demo interface for Recommendation Systems course project
+    </div>
+</div>
 
 <script src="script.js"></script>
 
