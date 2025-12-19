@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Recommender</title>
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 600px;
+            margin: auto;
+            padding-top: 40px;
+        }
+        input, button {
+            padding: 10px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .book {
+            border-bottom: 1px solid #ccc;
+            padding: 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Goodreads Book Recommender</h2>
+
+<input type="text" id="userId" placeholder="Enter user ID">
+<button onclick="getRecommendations()">Recommend Books</button>
+
+<div id="results"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
